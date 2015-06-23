@@ -1,2 +1,4 @@
 node_modules/*
 !node_modules/ironworks
+client/node_modules/*
+client/bower_components/*
