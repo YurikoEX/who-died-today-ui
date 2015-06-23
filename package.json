@@ -1,0 +1,12 @@
+{
+  "name": "who-died-today-ui",
+  "version": "1.0.0",
+  "description": "Who died Today",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Shawn Conrad && Joshua Lunsford",
+  "license": "ISC"
+}
