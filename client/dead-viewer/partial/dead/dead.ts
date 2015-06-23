@@ -18,7 +18,7 @@ interface personEntry {
 
 angular.module('deadViewer').controller('DeadCtrl',($scope,socketService, $interval)=>{
     $scope.deadType = 'celeb';
-    $scope.graveyard = [{name:'James Horner'},{name:'Dick Van Patten'}];
+    $scope.graveyard:personEntry[] = [{name:'James Horner'},{name:'Dick Van Patten'}];
     $scope.selectDeadType = function(type){
         $scope.deadType = type;
     };
