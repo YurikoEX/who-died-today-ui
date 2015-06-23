@@ -8,5 +8,9 @@
     "start": "node index.js"
   },
   "author": "Shawn Conrad && Joshua Lunsford",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "async": "^1.2.1",
+    "lodash": "^3.9.3"
+  }
 }
