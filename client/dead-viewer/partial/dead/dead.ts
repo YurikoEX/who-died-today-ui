@@ -18,8 +18,16 @@ interface personEntry {
     details: IDetails;
 }
 
+interface typedScope {
+    deadType:deadType;
+    graveyard:personEntry[];
+    selectDeadType: any;
+    alerts: any;
+}
+
 angular.module('deadViewer').controller('DeadCtrl',($scope,socketService, $interval)=>{
-    $scope.deadType = 'celeb';
+    var typedScope = $scope;
+    $scope.deadType = deadType.Celeb;
     $scope.graveyard:personEntry[] = [{name:'James Horner'},{name:'Dick Van Patten'}];
     $scope.selectDeadType = function(type){
         $scope.deadType = type;
@@ -28,7 +36,7 @@ angular.module('deadViewer').controller('DeadCtrl',($scope,socketService, $inter
         console.log('calling socket');
         socketService.emit(
             'comm.dead-fetcher.request.dead-worker.dead',
-            <deadType>{deadType:$scope.deadType},
+            $scope.deadType,
             (err,results:personEntry) => {
                 console.log('results returned');
                 if(err){
