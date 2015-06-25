@@ -1,7 +1,9 @@
 /// <reference path="../../../../typings/angularjs/angular.d.ts" />
 
-interface deadType {
-    deadType:string;
+enum deadType {
+    Celeb,
+    Musician,
+    Sports
 }
 
 interface IDetails {
