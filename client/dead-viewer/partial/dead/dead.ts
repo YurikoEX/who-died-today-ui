@@ -1,7 +1,11 @@
 /// <reference path="../../../../typings/angularjs/angular.d.ts" />
 
-interface deadType {
-    deadType:string;
+
+
+enum deadType {
+    Celeb,
+    Musician,
+    Sports
 }
 
 interface IDetails {
@@ -10,33 +14,46 @@ interface IDetails {
     location: string;
 }
 
-interface personEntry {
+interface IPersonEntry {
     name: string;
-    pictureUrl: string;
-    details: IDetails;
+    pictureUrl?: string;
+    details?: IDetails;
+}
+
+interface typedScope {
+    deadType: deadType;
+    graveyard: IPersonEntry[];
+    selectDeadType: (type:deadType)=>void;
+    alerts:any;
 }
 
 angular.module('deadViewer').controller('DeadCtrl',($scope,socketService, $interval)=>{
-    $scope.deadType = 'celeb';
-    $scope.graveyard = [{name:'James Horner'},{name:'Dick Van Patten'}];
-    $scope.selectDeadType = function(type){
-        $scope.deadType = type;
+    var typedScope:typedScope = $scope;
+    typedScope.deadType = deadType.Celeb;
+    typedScope.graveyard = [{name:'James Horner'},{name:'Dick Van Patten'}];
+    typedScope.selectDeadType = function(type){
+        typedScope.deadType = type;
     };
     $interval( () => {
         console.log('calling socket');
         socketService.emit(
-            'comm.dead-fetcher.request.dead-worker.dead',
-            <deadType>{deadType:$scope.deadType},
-            (err,results:personEntry) => {
+            'comm.ui-service.request.dead-fetcher-proxy.dead',
+            deadType.Celeb,
+            (err,result:IPersonEntry) => {
                 console.log('results returned');
                 if(err){
-                    $scope.alerts = [ { type: 'danger', msg: err }];
+                    typedScope.alerts = [ { type: 'danger', msg: err }];
                 }
                 else {
-                    if(!_.any($scope.graveyard,function(person){
-                        return person.name === results.name;
-                    })){
-                        $scope.graveyard.push(angular.copy(results));
+                    var add = true;
+                    for(var i = 0; i< typedScope.graveyard.length;i++){
+                        if(typedScope.graveyard[i].name === result.name){
+                            add=false;
+                        }
+                    }
+
+                    if(add){
+                        typedScope.graveyard.push(angular.copy(result));
                     }
                 }
             });

@@ -2,6 +2,7 @@
 var ironworks = require('ironworks');
 var path = require('path');
 var _ = require('lodash');
+var DeadFetcherProxy = require('./dead-fetcher-proxy');
 /**
  * Create a class to handle your UI service
  */
@@ -13,13 +14,13 @@ var Main = (function () {
         if (_.isUndefined(process.env.VCAP_APP_PORT)) {
             process.env.VCAP_APP_PORT = 8081;
         }
-        if (_.isUndefined(process.env['VCAP_SERVICES'])) {
-            process.env['VCAP_SERVICES'] = JSON.stringify({
+        if (_.isUndefined(process.env['VCAP_SERVICES_test1'])) {
+            process.env['VCAP_SERVICES_test1'] = JSON.stringify({
                 "user-provided": [
                     {
                         "credentials": {
                             "iw": "true",
-                            "serviceName": "my-other-service",
+                            "serviceName": "dead-fetcher",
                             "protocol": "http",
                             "host": "localhost",
                             "port": 8082,
@@ -27,7 +28,7 @@ var Main = (function () {
                             "token": "qwer32r123rewr213r"
                         },
                         "label": "user-provided",
-                        "name": "my-other-service",
+                        "name": "dead-fetcher",
                         "syslog_drain_url": "",
                         "tags": []
                     }
@@ -46,38 +47,37 @@ var Main = (function () {
     Main.prototype.init = function () {
         var _this = this;
         /**
+         * Local Worker
+         */
+        this.service.use(new DeadFetcherProxy());
+        /**
          * Start injecting the functionality you want in your service in the form of workers
          */
-        this.service.inject(function (service, addWorker) {
-            /**
-             * Add a HttpWorker to bind to the port and give the ability to serve RESTful services and static files
-             */
-            addWorker(new ironworks.workers.HttpWorker(service.comm, service.who(), {
-                apiUri: 'api',
-                rootSitePagePath: 'index.html',
-                hapi: {
-                    connections: {
-                        routes: {
-                            files: {
-                                relativeTo: path.resolve('./client/dist')
-                            }
+        this.service.use(new ironworks.workers.HttpWorker({
+            apiUri: 'api',
+            rootSitePagePath: 'index.html',
+            hapi: {
+                connections: {
+                    routes: {
+                        files: {
+                            relativeTo: path.resolve('./client/dist')
                         }
                     }
                 }
-            }));
-            /**
-             * SocketWorker gives the ability for your service to communicate through websockets
-             */
-            addWorker(new ironworks.workers.SocketWorker(service.comm, service.who()));
-            /**
-             * Cloud Foundry custom user provided services can be auto-wired up to your communication system. Zero work required!
-             */
-            addWorker(new ironworks.workers.CfClientWorker(service.comm, service.who()));
-            /**
-             * LogWorker follows the 12 factor logging standard of STDOUT/STDERR
-             */
-            addWorker(new ironworks.workers.LogWorker(service.comm, service.who()));
-        });
+            }
+        }));
+        /**
+         * SocketWorker gives the ability for your service to communicate through websockets
+         */
+        this.service.use(new ironworks.workers.SocketWorker());
+        /**
+         * Cloud Foundry custom user provided services can be auto-wired up to your communication system. Zero work required!
+         */
+        this.service.use(new ironworks.workers.CfClientWorker({ vcapServices: 'VCAP_SERVICES_test1' }));
+        /**
+         * LogWorker follows the 12 factor logging standard of STDOUT/STDERR
+         */
+        this.service.use(new ironworks.workers.LogWorker());
         /**
          * Throw service level errors
          */

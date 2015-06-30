@@ -4,6 +4,5 @@ angular.module('socketModule').factory('socketService',function(socketFactory) {
     //var mySocket = socketFactory({
     //    ioSocket: myIoSocket
     //});
-
     return socketFactory();
 });

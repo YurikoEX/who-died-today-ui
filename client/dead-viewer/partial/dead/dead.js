@@ -1,22 +1,33 @@
 /// <reference path="../../../../typings/angularjs/angular.d.ts" />
+var deadType;
+(function (deadType) {
+    deadType[deadType["Celeb"] = 0] = "Celeb";
+    deadType[deadType["Musician"] = 1] = "Musician";
+    deadType[deadType["Sports"] = 2] = "Sports";
+})(deadType || (deadType = {}));
 angular.module('deadViewer').controller('DeadCtrl', function ($scope, socketService, $interval) {
-    $scope.deadType = 'celeb';
-    $scope.graveyard = [{ name: 'James Horner' }, { name: 'Dick Van Patten' }];
-    $scope.selectDeadType = function (type) {
-        $scope.deadType = type;
+    var typedScope = $scope;
+    typedScope.deadType = 0 /* Celeb */;
+    typedScope.graveyard = [{ name: 'James Horner' }, { name: 'Dick Van Patten' }];
+    typedScope.selectDeadType = function (type) {
+        typedScope.deadType = type;
     };
     $interval(function () {
         console.log('calling socket');
-        socketService.emit('comm.dead-fetcher.request.dead-worker.dead', { deadType: $scope.deadType }, function (err, results) {
+        socketService.emit('comm.ui-service.request.dead-fetcher-proxy.dead', 0 /* Celeb */, function (err, result) {
             console.log('results returned');
             if (err) {
-                $scope.alerts = [{ type: 'danger', msg: err }];
+                typedScope.alerts = [{ type: 'danger', msg: err }];
             }
             else {
-                if (!_.any($scope.graveyard, function (person) {
-                    return person.name === results.name;
-                })) {
-                    $scope.graveyard.push(angular.copy(results));
+                var add = true;
+                for (var i = 0; i < typedScope.graveyard.length; i++) {
+                    if (typedScope.graveyard[i].name === result.name) {
+                        add = false;
+                    }
+                }
+                if (add) {
+                    typedScope.graveyard.push(angular.copy(result));
                 }
             }
         });
