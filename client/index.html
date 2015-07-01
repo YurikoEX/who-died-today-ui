@@ -4,7 +4,21 @@
   <title></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta charset="utf-8">
-  <link href="app.less" type="text/css" rel="stylesheet/less">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="app.less" type="text/css" rel="stylesheet/less">
+    <style>
+        nav .brand-logo {
+            margin-left: 10px;
+            font-weight: 300;
+            text-transform: uppercase;
+        }
+        .card .card-action a {
+            color: #444;
+            text-transform: uppercase;
+            border-bottom: 1px dotted #444;
+        }
+    </style>
 </head>
 <body>
 
@@ -29,6 +43,7 @@
 
 
   <!-- Main App JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
   <script src="app.js"></script>
   <script src="dead-viewer/dead-viewer.js"></script>
   <script src="dead-viewer/partial/dead/dead.js"></script>
@@ -38,13 +53,11 @@
   <!-- Add New Component JS Above -->
 
   <div>
-    <div id="content" class="container">
-      <div class="row">
-          <h2>Who Died?</h2>
+    <div id="content" class="container-fluid">
         <div ui-view>
         </div>
-      </div>
     </div>
+   </div>
   </div>
 
 </body>
