@@ -7,14 +7,14 @@ var deadType;
 })(deadType || (deadType = {}));
 angular.module('deadViewer').controller('DeadCtrl', function ($scope, socketService, $interval) {
     var typedScope = $scope;
-    typedScope.deadType = 0 /* Celeb */;
+    typedScope.deadType = deadType.Celeb;
     typedScope.graveyard = [{ name: 'James Horner' }, { name: 'Dick Van Patten' }];
     typedScope.selectDeadType = function (type) {
         typedScope.deadType = type;
     };
     $interval(function () {
         console.log('calling socket');
-        socketService.emit('comm.ui-service.request.dead-fetcher-proxy.dead', 0 /* Celeb */, function (err, result) {
+        socketService.emit('comm.ui-service.request.dead-fetcher-proxy.dead', deadType.Celeb, function (err, result) {
             console.log('results returned');
             if (err) {
                 typedScope.alerts = [{ type: 'danger', msg: err }];

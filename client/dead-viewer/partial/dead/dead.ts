@@ -60,3 +60,4 @@ angular.module('deadViewer').controller('DeadCtrl',($scope,socketService, $inter
     }, 5000 );
 
 });
+
