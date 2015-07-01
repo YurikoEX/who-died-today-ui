@@ -4,7 +4,6 @@
             <div class="nav-wrapper blue">
                 <a href="#!" class="brand-logo">Twitchy</a>
                 <ul class="right hide-on-med-and-down">
-                    <li>7 Deaths Today</li>
                     <li><a href="sass.html"><i class="material-icons search">search</i></a></li>
                 </ul>
             </div>
@@ -22,7 +21,15 @@
                     <p>{{stream.statusMessage}}</p>
                 </div>
                 <div class="card-action">
-                    <a href="{{stream.url}}">More about {{stream.game}}</a>
+                    <div class="row">
+                        <div class="col s4">
+                            <a href="{{stream.url}}"><span class="logo"><img src="{{stream.logo}}" alt=""/></span></a>
+                        </div>
+                        <div class="col s8 action-section">
+                            <span class="displayName">{{stream.displayName}}</span><br/>
+                            <span class="followers">Followers: {{stream.followers}}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
