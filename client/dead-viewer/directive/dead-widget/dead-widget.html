@@ -2,7 +2,7 @@
     <div class="row">
         <nav>
             <div class="nav-wrapper blue">
-                <a href="#!" class="brand-logo">Who Died</a>
+                <a href="#!" class="brand-logo">Twitchy</a>
                 <ul class="right hide-on-med-and-down">
                     <li>7 Deaths Today</li>
                     <li><a href="sass.html"><i class="material-icons search">search</i></a></li>
@@ -15,14 +15,14 @@
         <div class="col s12 m6 l3">
             <div class="card">
                 <div class="card-image">
-                    <img src="{{stream.logo}}">
+                    <img src="{{stream.preview}}">
                     <span class="card-title">{{stream.game}}</span>
                 </div>
                 <div class="card-content">
-                    <p>Carter, whose entertainment career spanned more than seven decades, died of respiratory failure at his home in Beverly Hills, Calif.</p>
+                    <p>{{stream.statusMessage}}</p>
                 </div>
                 <div class="card-action">
-                    <a href="">More about Jack Carter</a>
+                    <a href="{{stream.url}}">More about {{stream.game}}</a>
                 </div>
             </div>
         </div>
