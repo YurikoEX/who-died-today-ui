@@ -14,8 +14,8 @@ var Main = (function () {
         if (_.isUndefined(process.env.VCAP_APP_PORT)) {
             process.env.VCAP_APP_PORT = 8081;
         }
-        if (_.isUndefined(process.env['VCAP_SERVICES_test1'])) {
-            process.env['VCAP_SERVICES_test1'] = JSON.stringify({
+        if (_.isUndefined(process.env['VCAP_SERVICES'])) {
+            process.env['VCAP_SERVICES'] = JSON.stringify({
                 "user-provided": [
                     {
                         "credentials": {
@@ -73,7 +73,7 @@ var Main = (function () {
         /**
          * Cloud Foundry custom user provided services can be auto-wired up to your communication system. Zero work required!
          */
-        this.service.use(new ironworks.workers.CfClientWorker({ vcapServices: 'VCAP_SERVICES_test1' }));
+        this.service.use(new ironworks.workers.CfClientWorker());
         /**
          * LogWorker follows the 12 factor logging standard of STDOUT/STDERR
          */

@@ -3,24 +3,23 @@
 
 import ironworks = require('ironworks');
 
-enum deadType {
-    Celeb,
-    Musician,
-    Sports
+interface IStreamRequest {
+    limit: number;
+    offset?: number;
 }
 
-interface IDetails {
-    cod: string;
-    timestamp: number;
-    location: string;
+interface IStream {
+    id: number;
+    game: string;
+    viewers: number;
+    preview: string;
+    displayName: string;
+    logo: string;
+    statusMessage: string;
+    url: string;
+    followers: number;
+    views: number;
 }
-
-interface IPersonEntry {
-    name: string;
-    pictureUrl: string;
-    details: IDetails;
-}
-
 interface IDeadFetcherProxyOpts {}
 
 class DeadFetcherProxy extends ironworks.workers.Worker {
@@ -40,9 +39,9 @@ class DeadFetcherProxy extends ironworks.workers.Worker {
     public init(comm, whoService, cb) {
         this.setComm(comm, whoService);
         var instance = this;
-        this.respond<deadType, IPersonEntry>('dead', (req, cb) => {
+        this.respond<IStreamRequest, IStream[]>('dead', (req, cb) => {
             console.log("calling external service");
-            instance.request<deadType, IPersonEntry>('comm.dead-fetcher.request.dead-worker.dead', req, (e, res) => {
+            instance.request<IStreamRequest, IStream[]>('comm.twitch-service.request.twitch-worker.get-streams', req, (e, res) => {
                 cb(e, res);
             });
         });

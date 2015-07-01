@@ -26,8 +26,8 @@ class Main {
             process.env.VCAP_APP_PORT = 8081;
         }
 
-        if (_.isUndefined(process.env['VCAP_SERVICES_test1'])) {
-            process.env['VCAP_SERVICES_test1'] = JSON.stringify(
+        if (_.isUndefined(process.env['VCAP_SERVICES'])) {
+            process.env['VCAP_SERVICES'] = JSON.stringify(
                 {
                     "user-provided": [
                         {
@@ -93,7 +93,7 @@ class Main {
         /**
          * Cloud Foundry custom user provided services can be auto-wired up to your communication system. Zero work required!
          */
-        this.service.use(new ironworks.workers.CfClientWorker({vcapServices:'VCAP_SERVICES_test1'}));
+        this.service.use(new ironworks.workers.CfClientWorker());
 
 
 

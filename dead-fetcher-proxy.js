@@ -6,12 +6,6 @@ var __extends = this.__extends || function (d, b) {
     d.prototype = new __();
 };
 var ironworks = require('ironworks');
-var deadType;
-(function (deadType) {
-    deadType[deadType["Celeb"] = 0] = "Celeb";
-    deadType[deadType["Musician"] = 1] = "Musician";
-    deadType[deadType["Sports"] = 2] = "Sports";
-})(deadType || (deadType = {}));
 var DeadFetcherProxy = (function (_super) {
     __extends(DeadFetcherProxy, _super);
     function DeadFetcherProxy(opts) {
@@ -30,7 +24,7 @@ var DeadFetcherProxy = (function (_super) {
         var instance = this;
         this.respond('dead', function (req, cb) {
             console.log("calling external service");
-            instance.request('comm.dead-fetcher.request.dead-worker.dead', req, function (e, res) {
+            instance.request('comm.twitch-service.request.twitch-worker.get-streams', req, function (e, res) {
                 cb(e, res);
             });
         });

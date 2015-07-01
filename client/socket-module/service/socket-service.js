@@ -1,8 +1,11 @@
 angular.module('socketModule').factory('socketService',function(socketFactory) {
-    //var myIoSocket = io.connect('/');
-    //
-    //var mySocket = socketFactory({
-    //    ioSocket: myIoSocket
-    //});
-    return socketFactory();
+    var socketService;
+
+    var myIoSocket = io.connect('/',{port: 4443, secure: true} );
+
+    socketService = socketFactory({
+        ioSocket: myIoSocket
+    });
+
+    return socketService;
 });

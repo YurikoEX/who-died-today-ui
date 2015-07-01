@@ -38,6 +38,7 @@ angular.module('deadViewer').controller('DeadCtrl',($scope,socketService, $inter
         "views": 183575215
     }
     ];
+    var timer = 0;
     $interval( () => {
         console.log('calling socket');
 
@@ -54,7 +55,8 @@ angular.module('deadViewer').controller('DeadCtrl',($scope,socketService, $inter
                     typedScope.streams = results;
                 }
             });
-    }, 1000 * 60);
+        timer = 1000 * 60;
+    }, timer);
 
 });
 
