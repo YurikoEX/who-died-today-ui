@@ -3,7 +3,7 @@ angular.module('deadViewer').directive('deadWidget', function() {
 		restrict: 'E',
 		replace: true,
 		scope: {
-            person: '='
+            stream: '='
         },
 		templateUrl: 'dead-viewer/directive/dead-widget/dead-widget.html',
 		link: function(scope, element, attrs, fn) {

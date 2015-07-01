@@ -1,10 +1,6 @@
 <div class="col-md-12" ng-controller="DeadCtrl">
-    <div>
-        <button ng-click="selectDeadType('athlete')"><i class="fa fa-soccer-ball-o"/></button>
-        <button ng-click="selectDeadType('celeb')"><i class="fa fa-soccer-ball-o"/></button>
-        <button ng-click="selectDeadType('musician')"><i class="fa fa-soccer-ball-o"/></button>
-    </div>
-<h3>These {{deadType}}'s Died:</h3>
-<div ng-repeat="person in graveyard"><dead-widget person="person"/></div>
+
+<h3>Twitchy</h3>
+<div ng-repeat="stream in streams"><dead-widget stream="stream"/></div>
 
 </div>
