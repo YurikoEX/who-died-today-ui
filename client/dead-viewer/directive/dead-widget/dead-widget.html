@@ -6,7 +6,6 @@
                 <span class="card-title">{{stream.game}}</span>
             </div>
             <div class="card-content">
-                <h2>Status</h2>
                 <p>{{stream.statusMessage}}</p>
             </div>
             <div class="card-action">
@@ -15,10 +14,10 @@
                         <a href="{{stream.url}}" target="_blank"><span class="logo"><img src="{{stream.logo}}" alt=""/></span></a>
                     </div>
                     <div class="col s8 action-section">
-                        <a href="{{stream.url}}" target="_blank"><span class="displayName"><i class="material-icons left">perm_identity</i>{{stream.displayName}}</span></a><br/>
+                        <a href="{{stream.url}}" target="_blank"><span class="displayName">{{stream.displayName}}</span></a><br/>
                         <div class="followers blue lighten-1">
-                            <span><i class="material-icons">supervisor_account</i>&nbsp;{{stream.followers}}</span>
-                            <span><i class="material-icons">visibility</i>&nbsp;{{stream.views}}</span>
+                            <span>Current Viewers:&nbsp;{{stream.followers}}</span>
+                            <span>Subscribers:&nbsp;{{stream.views}}</span>
                         </div>
                     </div>
                 </div>

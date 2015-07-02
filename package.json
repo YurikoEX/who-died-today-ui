@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "async": "^1.2.1",
+    "iw-twitchy-interface": "git+https://github.com/YurikoEX/iw-twitchy-interface.git",
     "lodash": "^3.9.3"
   },
   "engines": {
