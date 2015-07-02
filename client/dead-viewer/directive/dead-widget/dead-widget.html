@@ -3,6 +3,7 @@
         <div class="card">
             <div class="card-image">
                 <img src="{{stream.preview}}">
+                <span class="viewers">Current Viewers:&nbsp;{{stream.followers}}</span>
                 <span class="card-title">{{stream.game}}</span>
             </div>
             <div class="card-content">
@@ -16,7 +17,6 @@
                     <div class="col s8 action-section">
                         <a href="{{stream.url}}" target="_blank"><span class="displayName">{{stream.displayName}}</span></a><br/>
                         <div class="followers blue lighten-1">
-                            <span>Current Viewers:&nbsp;{{stream.followers}}</span>
                             <span>Subscribers:&nbsp;{{stream.views}}</span>
                         </div>
                     </div>
