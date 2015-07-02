@@ -1,10 +1,9 @@
 angular.module('deadViewer').controller('DeadCtrl', function ($scope, socketService, $interval) {
     var typedScope = $scope;
     typedScope.streams = [];
-    var timer = 0;
-    $interval(function () {
-        console.log('calling socket');
+    function update() {
         var streamRequest = { limit: 8 };
+        console.log('submitting socketcall');
         socketService.emit('comm.twitch-service.request.twitch-worker.get-streams', streamRequest, function (err, results) {
             console.log('results returned');
             if (err) {
@@ -17,7 +16,10 @@ angular.module('deadViewer').controller('DeadCtrl', function ($scope, socketServ
                 typedScope.streams = results;
             }
         });
-        timer = 1000 * 60;
-    }, timer);
+    }
+    update();
+    $interval(function () {
+        update();
+    }, 1000 * 30);
 });
 //# sourceMappingURL=dead.js.map
