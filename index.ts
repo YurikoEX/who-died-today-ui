@@ -4,6 +4,11 @@ import path = require('path');
 import _ = require('lodash');
 
 import service = ironworks.service;
+import HttpWorker = ironworks.workers.HttpWorker;
+import SocketWorker = ironworks.workers.SocketWorker;
+import CfClientWorker = ironworks.workers.CfClientWorker;
+import LogWorker = ironworks.workers.LogWorker;
+import Collection = ironworks.collection.Collection;
 
 import DeadFetcherProxy = require('./dead-fetcher-proxy');
 
@@ -21,33 +26,6 @@ class Main {
      * Constructor Function
      */
     constructor(){
-
-        if (_.isUndefined(process.env.VCAP_APP_PORT)) {
-            process.env.VCAP_APP_PORT = 8081;
-        }
-
-        if (_.isUndefined(process.env['VCAP_SERVICES'])) {
-            process.env['VCAP_SERVICES'] = JSON.stringify(
-                {
-                    "user-provided": [
-                        {
-                            "credentials": {
-                                "iw": "true",
-                                "serviceName": "dead-fetcher",
-                                "protocol": "http",
-                                "host": "localhost",
-                                "port": 8082,
-                                "route": "",
-                                "token": "qwer32r123rewr213r"
-                            },
-                            "label": "user-provided",
-                            "name": "dead-fetcher",
-                            "syslog_drain_url": "",
-                            "tags": []
-                        }
-                    ]
-                });
-        }
 
         /**
          * This is the main service for ironworks
@@ -71,7 +49,7 @@ class Main {
         /**
          * Start injecting the functionality you want in your service in the form of workers
          */
-        this.service.use(new ironworks.workers.HttpWorker({
+        this.service.use(new HttpWorker({
                 apiUri:'api',
                 rootSitePagePath:'index.html',
                 hapi: {
@@ -88,19 +66,19 @@ class Main {
         /**
          * SocketWorker gives the ability for your service to communicate through websockets
          */
-        this.service.use(new ironworks.workers.SocketWorker());
+        this.service.use(new SocketWorker());
 
         /**
          * Cloud Foundry custom user provided services can be auto-wired up to your communication system. Zero work required!
          */
-        this.service.use(new ironworks.workers.CfClientWorker());
+        this.service.use(new CfClientWorker());
 
 
 
         /**
          * LogWorker follows the 12 factor logging standard of STDOUT/STDERR
          */
-        this.service.use(new ironworks.workers.LogWorker());
+        this.service.use(new LogWorker());
 
         /**
          * Throw service level errors
@@ -119,7 +97,7 @@ class Main {
         /**
          * Call the start event to start the service and enter the running state
          */
-        this.service.start(new ironworks.collection.Collection('service-collection'),(e) => {
+        this.service.start(new Collection('service-collection'),(e) => {
             this.service.comm.tell('SERVICE START');
         });
 
